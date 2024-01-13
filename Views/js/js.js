@@ -616,6 +616,8 @@ $(document).ready(function () {
 					if (len > 0) {
 						clearTimeout(controladorTiempo);
 						controladorTiempo = setTimeout(codigoAJAX, 500);
+					}else{
+						console.log("el dato", data);
 					}
 				})
 		});
