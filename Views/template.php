@@ -52,6 +52,7 @@ ob_start();
 			</div>
 		</div>
 	</section>
+	<script src="Views/js/ConectorJavaScript.js"></script>
 	<script src="Views/js/jquery-3.6.0.js"></script>
 	<script type='text/javascript' src='Views/js/jquery/3.2.1/jquery.min.js'></script>
 	<script src="Views/js/jquery-ui.js"></script>

@@ -112,169 +112,276 @@ $resCliente = $mostrarCliente->mostrarClienteFacturaVentaModelo($id_cliente);
         </tbody>
     </table>
 </div>
-<?php
-/* Call this file 'hello-world.php' */
-require 'vendor/autoload.php';
-use Mike42\Escpos\Printer;
-use Mike42\Escpos\PrintConnectors\FilePrintConnector;
-use Mike42\Escpos\EscposImage;
+<div class="container">
+		<div class="columns">
+			<div class="column">
+			</div>
+		</div>
+		<div class="columns">
+			<div class="column">
+				<div class="select is-rounded">
+					<select hidden id="listaDeImpresoras"></select>
+				</div>
+				<div class="field">
+					<!--<label class="label">Separador</label>-->
+					<div class="control">
+						<input hidden id="separador" value=" " class="input" type="text" maxlength="1"
+							placeholder="El separador de columnas">
+					</div>
+				</div>
+				<div class="field">
+					<!--<label class="label">Relleno</label>-->
+					<div class="control">
+						<input hidden id="relleno" value=" " class="input" type="text" maxlength="1"
+							placeholder="El relleno de las celdas">
+					</div>
+				</div>
+				<div class="field">
+					<!--<label class="label">Máxima longitud para el nombre</label>-->
+					<div class="control">
+						<input hidden id="maximaLongitudNombre" value="20" class="input" type="number">
+					</div>
+				</div>
+				<div class="field">
+					<!--<label class="label">Máxima longitud para la cantidad</label>-->
+					<div class="control">
+						<input hidden id="maximaLongitudCantidad" value="8" class="input" type="number">
+					</div>
+				</div>
+				<div class="field">
+					<!--<label class="label">Máxima longitud para el precio</label>-->
+					<div class="control">
+						<input hidden id="maximaLongitudPrecio" value="8" class="input" type="number">
+					</div>
+				</div>
+				<button id="btnImprimir" class="btn btn-primary mt-2">Imprimir</button>
+			</div>
+			</div>
+		</div>
+	</div>
+<script>
+    //Imprimir
 
-$connector = new FilePrintConnector("php://stdout");
-$printer = new Printer($connector);
-
-/* Initialize */
-$printer -> initialize();
-
-/* Text */
-$printer -> text("Hello world\n");
-$printer -> cut();
-
-/* Line feeds */
-$printer -> text("ABC");
-$printer -> feed(7);
-$printer -> text("DEF");
-$printer -> feedReverse(3);
-$printer -> text("GHI");
-$printer -> feed();
-$printer -> cut();
-
-/* Font modes */
-$modes = array(
-    Printer::MODE_FONT_B,
-    Printer::MODE_EMPHASIZED,
-    Printer::MODE_DOUBLE_HEIGHT,
-    Printer::MODE_DOUBLE_WIDTH,
-    Printer::MODE_UNDERLINE);
-for ($i = 0; $i < pow(2, count($modes)); $i++) {
-    $bits = str_pad(decbin($i), count($modes), "0", STR_PAD_LEFT);
-    $mode = 0;
-    for ($j = 0; $j < strlen($bits); $j++) {
-        if (substr($bits, $j, 1) == "1") {
-            $mode |= $modes[$j];
+    document.addEventListener("DOMContentLoaded", async () => {
+        /*const conector = new ConectorPluginV3();
+        conector.Iniciar();
+        conector.EscribirTexto("<?php echo $diseno[0]['nom_sistema'] ?>\n");
+        conector.EscribirTexto("<?php echo $diseno[0]['nit'] ?>\n");
+        conector.EscribirTexto("<?php echo $diseno[0]['telefono'] ?>\n");
+        conector.EscribirTexto("<?php echo $diseno[0]['direccion'] ?>\n");
+        conector.EscribirTexto("--------------------------------------------------\n");
+        conector.EscribirTexto("Producto  |  Cantidad  |  Precio  | Total\n");
+        <?php
+        foreach ($resVenta as $key => $value) {
+            ?>
+            conector.EscribirTexto("<?php echo $value['nombre_producto']?>    <?php echo $value['cantidad']?>    <?php echo $value['valor_producto_iva']?>   <?php echo $value['precio_compra']?>\n");
+            <?php
         }
-    }
-    $printer -> selectPrintMode($mode);
-    $printer -> text("ABCDEFGHIJabcdefghijk\n");
-}
-$printer -> selectPrintMode(); // Reset
-$printer -> cut();
+        ?>
+        conector.EscribirTexto("--------------------------------------------------\n");
+        conector.EscribirTexto("Total $<?php echo $resFactura[0]['total_factura'] ?>\n");
+        conector.EscribirTexto("--------------------------------------------------\n");
+        conector.EscribirTexto("Pago <?php echo $resFactura[0]['efectivo'] ?>   Cambio: <?php echo $resFactura[0]['cambio'] ?>\n");
+        conector.Feed(1);
+        const respuesta = await conector
+        .imprimirEn("prueba1");
+        init();*/
+        // Las siguientes 3 funciones fueron tomadas de: https://parzibyte.me/blog/2023/02/28/javascript-tabular-datos-limite-longitud-separador-relleno/
+		// No tienen que ver con el plugin, solo son funciones de JS creadas por mí para tabular datos y enviarlos
+		// a cualquier lugar
+		const separarCadenaEnArregloSiSuperaLongitud = (cadena, maximaLongitud) => {
+			const resultado = [];
+			let indice = 0;
+			while (indice < cadena.length) {
+				const pedazo = cadena.substring(indice, indice + maximaLongitud);
+				indice += maximaLongitud;
+				resultado.push(pedazo);
+			}
+			return resultado;
+		}
+		const dividirCadenasYEncontrarMayorConteoDeBloques = (contenidosConMaximaLongitud) => {
+			let mayorConteoDeCadenasSeparadas = 0;
+			const cadenasSeparadas = [];
+			for (const contenido of contenidosConMaximaLongitud) {
+				const separadas = separarCadenaEnArregloSiSuperaLongitud(contenido.contenido, contenido.maximaLongitud);
+				cadenasSeparadas.push({ separadas, maximaLongitud: contenido.maximaLongitud });
+				if (separadas.length > mayorConteoDeCadenasSeparadas) {
+					mayorConteoDeCadenasSeparadas = separadas.length;
+				}
+			}
+			return [cadenasSeparadas, mayorConteoDeCadenasSeparadas];
+		}
+		const tabularDatos = (cadenas, relleno, separadorColumnas) => {
+			const [arreglosDeContenidosConMaximaLongitudSeparadas, mayorConteoDeBloques] = dividirCadenasYEncontrarMayorConteoDeBloques(cadenas)
+			let indice = 0;
+			const lineas = [];
+			while (indice < mayorConteoDeBloques) {
+				let linea = "";
+				for (const contenidos of arreglosDeContenidosConMaximaLongitudSeparadas) {
+					let cadena = "";
+					if (indice < contenidos.separadas.length) {
+						cadena = contenidos.separadas[indice];
+					}
+					if (cadena.length < contenidos.maximaLongitud) {
+						cadena = cadena + relleno.repeat(contenidos.maximaLongitud - cadena.length);
+					}
+					linea += cadena + separadorColumnas;
+				}
+				lineas.push(linea);
+				indice++;
+			}
+			return lineas;
+		}
 
-/* Underline */
-for ($i = 0; $i < 3; $i++) {
-    $printer -> setUnderline($i);
-    $printer -> text("The quick brown fox jumps over the lazy dog\n");
-}
-$printer -> setUnderline(0); // Reset
-$printer -> cut();
 
-/* Cuts */
-$printer -> text("Partial cut\n(not available on all printers)\n");
-$printer -> cut(Printer::CUT_PARTIAL);
-$printer -> text("Full cut\n");
-$printer -> cut(Printer::CUT_FULL);
+		/*const obtenerListaDeImpresoras = async () => {
+			return await ConectorPluginV3.obtenerImpresoras();
+		}*/
+		const URLPlugin = "http://localhost:8000"
+		const $listaDeImpresoras = document.querySelector("#listaDeImpresoras"),
+			$btnImprimir = document.querySelector("#btnImprimir"),
+			$separador = document.querySelector("#separador"),
+			$relleno = document.querySelector("#relleno"),
+			$maximaLongitudNombre = document.querySelector("#maximaLongitudNombre"),
+			$maximaLongitudCantidad = document.querySelector("#maximaLongitudCantidad"),
+			$maximaLongitudPrecio = document.querySelector("#maximaLongitudPrecio");
+            $maximaLongitudPrecioTotal = document.querySelector("#maximaLongitudPrecio");
 
-/* Emphasis */
-for ($i = 0; $i < 2; $i++) {
-    $printer -> setEmphasis($i == 1);
-    $printer -> text("The quick brown fox jumps over the lazy dog\n");
-}
-$printer -> setEmphasis(false); // Reset
-$printer -> cut();
+		const init = async () => {
+			/*const impresoras = await ConectorPluginV3.obtenerImpresoras();
+			for (const impresora of impresoras) {
+				$listaDeImpresoras.appendChild(Object.assign(document.createElement("option"), {
+					value: impresora,
+					text: impresora,
+				}));
+			}*/
+			$btnImprimir.addEventListener("click", () => {
+				const nombreImpresora = "prueba1";
+				if (!nombreImpresora) {
+					return alert("Por favor seleccione una impresora. Si no hay ninguna, asegúrese de haberla compartido como se indica en: https://parzibyte.me/blog/2017/12/11/instalar-impresora-termica-generica/")
+				}
+				imprimirTabla(nombreImpresora);
+			});
+		}
 
-/* Double-strike (looks basically the same as emphasis) */
-for ($i = 0; $i < 2; $i++) {
-    $printer -> setDoubleStrike($i == 1);
-    $printer -> text("The quick brown fox jumps over the lazy dog\n");
-}
-$printer -> setDoubleStrike(false);
-$printer -> cut();
 
-/* Fonts (many printers do not have a 'Font C') */
-$fonts = array(
-    Printer::FONT_A,
-    Printer::FONT_B,
-    Printer::FONT_C);
-for ($i = 0; $i < count($fonts); $i++) {
-    $printer -> setFont($fonts[$i]);
-    $printer -> text("The quick brown fox jumps over the lazy dog\n");
-}
-$printer -> setFont(); // Reset
-$printer -> cut();
+		const imprimirTabla = async (nombreImpresora) => {
+			const maximaLongitudNombre = parseInt($maximaLongitudNombre.value),
+				maximaLongitudCantidad = parseInt($maximaLongitudCantidad.value),
+				maximaLongitudPrecio = parseInt($maximaLongitudPrecio.value),
+                maximaLongitudPrecioTotal = parseInt($maximaLongitudPrecio.value),
+				relleno = $relleno.value,
+				separadorColumnas = $separador.value;
+			const obtenerLineaSeparadora = () => {
+				const lineasSeparador = tabularDatos(
+					[
+						{ contenido: "-", maximaLongitud: maximaLongitudNombre },
+						{ contenido: "-", maximaLongitud: maximaLongitudCantidad },
+						{ contenido: "-", maximaLongitud: maximaLongitudPrecio },
+                        { contenido: "-", maximaLongitud: maximaLongitudPrecioTotal },
+					],
+					"-",
+					"+",
+				);
+				let separadorDeLineas = "";
+				if (lineasSeparador.length > 0) {
+					separadorDeLineas = lineasSeparador[0]
+				}
+				return separadorDeLineas;
+			}
+			// Simple lista de ejemplo. Obviamente tú puedes traerla de cualquier otro lado,
+			// definir otras propiedades, etcétera
+			const listaDeProductos = [
+				<?php foreach ($resVenta as $key => $value) {
+                    ?>
+                    {
+                        nombre: "<?php echo $value['nombre_producto'] ?>",
+                        cantidad: <?php echo $value['cantidad'] ?>,
+                        precio: <?php echo $value['valor_producto_iva'] ?>,
+                        precioTotal: <?php echo $value['precio_compra'] ?>,
+                    },
+                <?php
+                }
+                ?>
+			];
+			// Comenzar a diseñar la tabla
+			let tabla = obtenerLineaSeparadora() + "\n";
 
-/* Justification */
-$justification = array(
-    Printer::JUSTIFY_LEFT,
-    Printer::JUSTIFY_CENTER,
-    Printer::JUSTIFY_RIGHT);
-for ($i = 0; $i < count($justification); $i++) {
-    $printer -> setJustification($justification[$i]);
-    $printer -> text("A man a plan a canal panama\n");
-}
-$printer -> setJustification(); // Reset
-$printer -> cut();
 
-/* Barcodes - see barcode.php for more detail */
-$printer -> setBarcodeHeight(80);
-$printer->setBarcodeTextPosition(Printer::BARCODE_TEXT_BELOW);
-$printer -> barcode("9876");
-$printer -> feed();
-$printer -> cut();
+			const lineasEncabezado = tabularDatos([
+				{ contenido: "Nombre", maximaLongitud: maximaLongitudNombre },
+				{ contenido: "Cantidad", maximaLongitud: maximaLongitudCantidad },
+				{ contenido: "Precio", maximaLongitud: maximaLongitudPrecio },
+                { contenido: "Total", maximaLongitud: maximaLongitudPrecioTotal },
+			],
+				relleno,
+				separadorColumnas,
+			);
 
-/* Graphics - this demo will not work on some non-Epson printers */
-try {
-    $logo = EscposImage::load("resources/escpos-php.png", false);
-    $imgModes = array(
-        Printer::IMG_DEFAULT,
-        Printer::IMG_DOUBLE_WIDTH,
-        Printer::IMG_DOUBLE_HEIGHT,
-        Printer::IMG_DOUBLE_WIDTH | Printer::IMG_DOUBLE_HEIGHT
-    );
-    foreach ($imgModes as $mode) {
-        $printer -> graphics($logo, $mode);
-    }
-} catch (Exception $e) {
-    /* Images not supported on your PHP, or image file not found */
-    $printer -> text($e -> getMessage() . "\n");
-}
-$printer -> cut();
+			for (const linea of lineasEncabezado) {
+				tabla += linea + "\n";
+			}
+			tabla += obtenerLineaSeparadora() + "\n";
+			for (const producto of listaDeProductos) {
+				const lineas = tabularDatos(
+					[
+						{ contenido: producto.nombre, maximaLongitud: maximaLongitudNombre },
+						{ contenido: producto.cantidad.toString(), maximaLongitud: maximaLongitudCantidad },
+						{ contenido: producto.precio.toString(), maximaLongitud: maximaLongitudPrecio },
+                        { contenido: producto.precioTotal.toString(), maximaLongitud: maximaLongitudPrecio },
+					],
+					relleno,
+					separadorColumnas
+				);
+				for (const linea of lineas) {
+					tabla += linea + "\n";
+				}
+				tabla += obtenerLineaSeparadora() + "\n";
+			}
+			console.log(tabla);
 
-/* Bit image */
-try {
-    $logo = EscposImage::load("resources/escpos-php.png", false);
-    $imgModes = array(
-        Printer::IMG_DEFAULT,
-        Printer::IMG_DOUBLE_WIDTH,
-        Printer::IMG_DOUBLE_HEIGHT,
-        Printer::IMG_DOUBLE_WIDTH | Printer::IMG_DOUBLE_HEIGHT
-    );
-    foreach ($imgModes as $mode) {
-        $printer -> bitImage($logo, $mode);
-    }
-} catch (Exception $e) {
-    /* Images not supported on your PHP, or image file not found */
-    $printer -> text($e -> getMessage() . "\n");
-}
-$printer -> cut();
 
-/* QR Code - see also the more in-depth demo at qr-code.php */
-$testStr = "Testing 123";
-$models = array(
-    Printer::QR_MODEL_1 => "QR Model 1",
-    Printer::QR_MODEL_2 => "QR Model 2 (default)",
-    Printer::QR_MICRO => "Micro QR code\n(not supported on all printers)");
-foreach ($models as $model => $name) {
-    $printer -> qrCode($testStr, Printer::QR_ECLEVEL_L, 3, $model);
-    $printer -> text("$name\n");
-    $printer -> feed();
-}
-$printer -> cut();
 
-/* Pulse */
-$printer -> pulse();
-
-/* Always close the printer! On some PrintConnectors, no actual
- * data is sent until the printer is closed. */
-$printer -> close();
+			const conector = new ConectorPluginV3(URLPlugin);
+            const respuesta = await conector
+                .Iniciar()
+                .DeshabilitarElModoDeCaracteresChinos()
+                .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
+                .DescargarImagenDeInternetEImprimir("http://assets.stickpng.com/thumbs/587e32259686194a55adab73.png", 0, 216)
+                .Feed(1)
+                .EscribirTexto("<?php echo $diseno[0]['nom_sistema'] ?>\n")
+                .TextoSegunPaginaDeCodigos(2, "cp850", "Nit: <?php echo $diseno[0]['nit'] ?>\n")
+                .TextoSegunPaginaDeCodigos(2, "cp850", "Teléfono: <?php echo $diseno[0]['telefono'] ?>\n")
+                .TextoSegunPaginaDeCodigos(2, "cp850", "Nit: <?php echo $diseno[0]['direccion'] ?>\n")
+                .EscribirTexto("Fecha: " + (new Intl.DateTimeFormat("es-MX").format(new Date())))
+                .Feed(1)
+                .EstablecerAlineacion(ConectorPluginV3.ALINEACION_IZQUIERDA)
+                .EscribirTexto("____________________\n")
+                .TextoSegunPaginaDeCodigos(2, "cp850", "Venta de plugin para impresoras versión 3\n")
+                .EstablecerAlineacion(ConectorPluginV3.ALINEACION_DERECHA)
+                .EscribirTexto(tabla)
+                .EscribirTexto("------------------------------------------------\n")
+                .EscribirTexto("Total $<?php echo $resFactura[0]['total_factura'] ?>\n")
+                .EscribirTexto("------------------------------------------------\n")
+                .EscribirTexto("Pago <?php echo $resFactura[0]['efectivo'] ?>   Cambio: <?php echo $resFactura[0]['cambio'] ?>\n")
+                .EscribirTexto("------------------------------------------------\n")
+                .EscribirTexto("Cliente Final\n")
+                .TextoSegunPaginaDeCodigos(2, "cp850", "Nombre y apellido: <?php echo $resCliente[0]['nombre']." ".$resCliente[0]['apellido'] ?>\n")
+                .TextoSegunPaginaDeCodigos(2, "cp850", "CC: <?php echo $resCliente[0]['numero_cedula'] ?>\n")
+                .Feed(3)
+                .Corte(1)
+                .Pulso(48, 60, 120)
+                .imprimirEn("prueba1");
+            if (respuesta === true) {
+                alert("Impreso correctamente");
+            } else {
+                alert("Error: " + respuesta);
+            }
+		}
+		init();
+    });
+</script>
+<?php
 /*require 'vendor/autoload.php';
 require_once 'dompdf/autoload.inc.php';
 
