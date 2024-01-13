@@ -260,7 +260,7 @@ $resCliente = $mostrarCliente->mostrarClienteFacturaVentaModelo($id_cliente);
 				if (!nombreImpresora) {
 					return alert("Por favor seleccione una impresora. Si no hay ninguna, asegúrese de haberla compartido como se indica en: https://parzibyte.me/blog/2017/12/11/instalar-impresora-termica-generica/")
 				}
-				imprimirTabla(nombreImpresora);
+				imprimirTabla("prueba1");
 			});
 		}
 
@@ -347,7 +347,7 @@ $resCliente = $mostrarCliente->mostrarClienteFacturaVentaModelo($id_cliente);
                 .Iniciar()
                 .DeshabilitarElModoDeCaracteresChinos()
                 .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
-                .DescargarImagenDeInternetEImprimir("http://assets.stickpng.com/thumbs/587e32259686194a55adab73.png", 0, 216)
+                .DescargarImagenDeInternetEImprimir("http://<?php echo $_SERVER['HTTP_HOST'] ?>/inventario/<?php echo $diseno[0]['icon_sistema'] ?>", 0, 216)
                 .Feed(1)
                 .EscribirTexto("<?php echo $diseno[0]['nom_sistema'] ?>\n")
                 .TextoSegunPaginaDeCodigos(2, "cp850", "Nit: <?php echo $diseno[0]['nit'] ?>\n")
