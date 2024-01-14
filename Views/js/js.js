@@ -420,21 +420,25 @@ $(document).ready(function () {
 		var splitid = id.split('_');
 		var index = splitid[1];
 
+		var valor_descuento = document.getElementById('descuento_' + index + '').value;
 		var valor = document.getElementById('valor_' + index + '').value;
 		let cantidad = document.getElementById('cantidad_' + index + '');
 		cantidad.addEventListener("keyup", function () {
-			var result = parseInt(valor) * parseInt(this.value);
-			document.getElementById('resultado_' + index).value = result;
-			let valor_total_elems = document.querySelectorAll('#resultado_' + index + '')
-			let suma = 0
-			valor_total_elems.forEach(e => suma += parseInt(e.value))
+			if (valor_descuento > 0) {
 
-			document.querySelector('#total_1').value = suma
+			} else {
+				var result = parseInt(valor) * parseInt(this.value);
+				document.getElementById('resultado_' + index).value = result;
+				let valor_total_elems = document.querySelectorAll('#resultado_' + index + '')
+				let suma = 0
+				valor_total_elems.forEach(e => suma += parseInt(e.value))
+
+				document.querySelector('#total_1').value = suma
+			}
 		});
 	});
 });
 //sumar factura
-//Multiplicar factura valor * cantidad
 $(document).ready(function () {
 	$(document).on('keydown', '.cantidad', function () {
 		var id = this.id;
@@ -446,7 +450,7 @@ $(document).ready(function () {
 			let valor_total_elems = document.querySelectorAll('.resultado')
 			let suma = 0
 			valor_total_elems.forEach(e => suma += parseInt(e.value))
-
+			console.log(suma);
 			document.querySelector('#total_1').value = suma
 		});
 	});
@@ -485,6 +489,43 @@ $(document).ready(function () {
 		});
 	});
 });
+//Calcular descuento precio del gramo
+$(document).ready(function () {
+	$(document).on('keydown', '.peso', function () {
+		var id = this.id;
+		var splitid = id.split('_');
+		var index = splitid[1];
+
+		var valor = document.getElementById('descuento_' + index + '').value;
+		let gramo = document.getElementById('peso_' + index + '');
+		gramo.addEventListener("keyup", function () {
+			if (parseInt(valor) > 0) {
+				var precio_gramo = parseInt(valor) / 1000;
+				var total_gramo = parseInt(precio_gramo) * parseInt(this.value);
+				document.getElementById('resultado_' + index).value = total_gramo;
+			} else {
+
+			}
+		});
+	});
+});
+//Multiplicar factura valor descuento * cantidad
+$(document).ready(function () {
+	$(document).on('keydown', '.cantidad', function () {
+		var id = this.id;
+		var splitid = id.split('_');
+		var index = splitid[1];
+
+		var valor = document.getElementById('descuento_' + index + '').value;
+		let cantidad = document.getElementById('cantidad_' + index + '');
+		cantidad.addEventListener("keyup", function () {
+			if (parseInt(valor) > 0) {
+				var result = parseInt(valor) * parseInt(this.value);
+				document.getElementById('resultado_' + index).value = result;
+			}
+		});
+	});
+});
 //cambio
 $(document).ready(function () {
 	$(document).on('keydown', '.pago', function () {
@@ -508,7 +549,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 	var index = 2;
 	$("#agregarFactura").click(function () {
-		$("#factura").append('<tr><td><input type="hidden" name="id_articulo[]" id="id_articulo_' + index + '"><input type="text" name="codigo" class="form-control codigo_articulo" id="codigo_' + index + '" placeholder="Codigo producto"></td><td><input type="text" name="articulo" class="form-control nombre_articulo" id="nombre_' + index + '" ></td><td><input type="text" name="precio" class="form-control" id="valor_' + index + '" disabled></td><td><input type="text" name="peso[]" class="form-control peso" id="peso_' + index + '" value="0" required><td><input type="text" name="cantidad[]" class="form-control cantidad" id="cantidad_' + index + '" value="0" required></td><td><input type="text" name="total" class="form-control resultado" id="resultado_' + index + '" disabled></td></tr>');
+		$("#factura").append('<tr><td><input type="hidden" name="id_articulo[]" id="id_articulo_' + index + '"><input type="text" name="codigo" class="form-control codigo_articulo" id="codigo_' + index + '" placeholder="Codigo producto"></td><td><input type="text" name="articulo" class="form-control nombre_articulo" id="nombre_' + index + '" placeholder="Nombre producto"></td><td><input type="text" name="precio" class="form-control" id="valor_' + index + '" disabled></td><td><input type="text" name="descuento[]" class="form-control" id="descuento_' + index + '" value="0"></td><td><input type="text" name="peso[]" class="form-control peso" id="peso_' + index + '" value="0" required><td><input type="text" name="cantidad[]" class="form-control cantidad" id="cantidad_' + index + '" value="0" required></td><td><input type="text" name="total" class="form-control resultado" id="resultado_' + index + '" disabled></td></tr>');
 		index++;
 	});
 });
@@ -616,7 +657,7 @@ $(document).ready(function () {
 					if (len > 0) {
 						clearTimeout(controladorTiempo);
 						controladorTiempo = setTimeout(codigoAJAX, 500);
-					}else{
+					} else {
 						console.log("el dato", data);
 					}
 				})

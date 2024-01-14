@@ -47,6 +47,7 @@ $diseno = $listarDiseno->listarDisenoTemplete();
                         <th>Codigo</th>
                         <th>Producto</th>
                         <th>Precio</th>
+                        <th>Precio descuento</th>
                         <th>Peso</th>
                         <th>Cantidad</th>
                         <th>Total</th>
@@ -59,6 +60,7 @@ $diseno = $listarDiseno->listarDisenoTemplete();
                                 placeholder="Codigo producto"></td>
                         <td><input type="text" name="articulo" class="form-control nombre_articulo" id="nombre_1" placeholder="Nombre producto"></td>
                         <td><input type="text" name="precio" class="form-control" id="valor_1" disabled></td>
+                        <td><input type="text" name="descuento[]" class="form-control" id="descuento_1" value="0"></td>
                         <td><input type="text" name="peso[]" class="form-control peso" id="peso_1" value="0" required>
                         <td><input type="text" name="cantidad[]" class="form-control cantidad" id="cantidad_1" value="0" required>
                         </td>
@@ -73,6 +75,7 @@ $diseno = $listarDiseno->listarDisenoTemplete();
                         <th></th>
                         <th></th>
                         <th></th>
+                        <th></th>
                         <th><input type="text" class="form-control factura" name="total_Factura" id="total_1" disabled>
                         </th>
                     </tr>
@@ -81,6 +84,7 @@ $diseno = $listarDiseno->listarDisenoTemplete();
                     <tr>
                         <th>Paga</th>
                         <th><input type="text" class="form-control pago" name="pago" id="pago_1" required></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th>Cambio</th>

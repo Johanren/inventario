@@ -72,10 +72,10 @@ $resCliente = $mostrarCliente->mostrarClienteFacturaVentaModelo($id_cliente);
                         <?php echo $value['nombre_producto'] ?>
                     </td>
                     <td>
-                        <?php echo $value['valor_producto_iva'] ?>
+                        <?php echo $value['valor_unitario'] ?>
                     </td>
                     <td>
-                        <?php echo $value['cantidad'] ?>
+                        <?php if($value['cantidad'] > 0){echo $value['cantidad'];}else{echo $value['peso']." GR";} ?>
                     </td>
                     <td>
                         <?php echo $value['precio_compra'] ?>
@@ -296,8 +296,8 @@ $resCliente = $mostrarCliente->mostrarClienteFacturaVentaModelo($id_cliente);
                     ?>
                     {
                         nombre: "<?php echo $value['nombre_producto'] ?>",
-                        cantidad: <?php echo $value['cantidad'] ?>,
-                        precio: <?php echo $value['valor_producto_iva'] ?>,
+                        cantidad: <?php if($value['cantidad'] > 0){echo $value['cantidad'];}else{echo $value['peso'];} ?>,
+                        precio: <?php echo $value['valor_unitario'] ?>,
                         precioTotal: <?php echo $value['precio_compra'] ?>,
                     },
                 <?php
