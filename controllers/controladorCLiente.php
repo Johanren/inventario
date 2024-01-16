@@ -8,7 +8,8 @@ class ControladorCLiente
             $dato = array(
                 'nombre' => $_POST['nombre'],
                 'apellido' => $_POST['apellido'],
-                'cc' => $_POST['cc']
+                'cc' => $_POST['cc'],
+                'email' => $_POST['email']
             );
             $agregar = new ModeloCliente();
             $res = $agregar->agregarClienteModelo($dato);
@@ -21,6 +22,7 @@ class ControladorCLiente
                 'nombre' => $_POST['nombre'],
                 'apellido' => $_POST['apellido'],
                 'cc' => $_POST['cc'],
+                'email' => $_POST['email'],
                 'id' => $_GET['id_cliente']
             );
             $agregar = new ModeloCliente();

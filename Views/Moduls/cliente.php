@@ -53,6 +53,7 @@ if (isset($_GET['pagina'])) {
             <th>Nombres</th>
             <th>Apelldios</th>
             <th>CC</th>
+            <th>Correo</th>
             <th>Acción</th>
         </tr>
     </thead>
@@ -73,6 +74,9 @@ if (isset($_GET['pagina'])) {
                     </td>
                     <td>
                         <?php echo $value['numero_cedula'] ?>
+                    </td>
+                    <td>
+                        <?php echo $value['correo'] ?>
                     </td>
                     <td><a href="index.php?action=editarCliente&id_cliente=<?php echo $value['id_cliente'] ?>"
                             class="btn btn-primary"><img src="Views/img/editar.png" alt="" width="20"></a></td>

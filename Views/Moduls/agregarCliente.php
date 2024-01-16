@@ -16,7 +16,11 @@
                 <div class="row">
                     <div class="col">
                         <label>CC</label>
-                        <input type="number" class="form-control" name="cc" placeholder="Cedula Cliente" required>
+                        <input type="text" class="form-control" name="cc" placeholder="Cedula Cliente" required>
+                    </div>
+                    <div class="col">
+                        <label>CC</label>
+                        <input type="email" class="form-control" name="email" placeholder="Correo Cliente" required>
                     </div>
                 </div>
                 <button name="agregar" class="btn btn-primary mt-5">Agregar</button>

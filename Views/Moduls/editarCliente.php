@@ -23,6 +23,10 @@ $listar = $actualizar->listarClienteEditar();
                         <label>CC</label>
                         <input type="number" class="form-control" name="cc" placeholder="Cedula Cliente" required value="<?php echo $listar[0]['numero_cedula'] ?>">
                     </div>
+                    <div class="col">
+                        <label>CC</label>
+                        <input type="email" class="form-control" name="email" placeholder="Correo Cliente" required value="<?php echo $listar[0]['correo'] ?>">
+                    </div>
                 </div>
                 <button name="actualizar" class="btn btn-primary mt-5">Actualizar</button>
             </form>

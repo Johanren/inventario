@@ -19,7 +19,6 @@ ob_start();
 	</title>
 
 </head>
-
 <body id="body-pd">
 	<header>
 		<?php

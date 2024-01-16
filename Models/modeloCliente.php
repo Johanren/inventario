@@ -6,13 +6,14 @@ class ModeloCliente
     public $tabla = 'cliente';
     function agregarClienteModelo($dato)
     {
-        $sql = "INSERT INTO $this->tabla (nombre, apellido, numero_cedula) VALUES (?,?,?)";
+        $sql = "INSERT INTO $this->tabla (nombre, apellido, numero_cedula, correo) VALUES (?,?,?,?)";
         $conn = new Conexion();
         $stms = $conn->conectar()->prepare($sql);
         if ($dato != '') {
             $stms->bindParam(1, $dato['nombre'], PDO::PARAM_STR);
             $stms->bindParam(2, $dato['apellido'], PDO::PARAM_STR);
             $stms->bindParam(3, $dato['cc'], PDO::PARAM_STR);
+            $stms->bindParam(4, $dato['email'], PDO::PARAM_STR);
         }
         try {
             if ($stms->execute()) {
@@ -91,14 +92,15 @@ class ModeloCliente
 
     function actualizarClienteModelo($dato)
     {
-        $sql = "UPDATE $this->tabla SET nombre=?,apellido=?,numero_cedula=? WHERE id_cliente=?";
+        $sql = "UPDATE $this->tabla SET nombre=?,apellido=?,numero_cedula=?,correo=? WHERE id_cliente=?";
         $conn = new Conexion();
         $stms = $conn->conectar()->prepare($sql);
         if ($dato != '') {
             $stms->bindParam(1, $dato['nombre'], PDO::PARAM_STR);
             $stms->bindParam(2, $dato['apellido'], PDO::PARAM_STR);
             $stms->bindParam(3, $dato['cc'], PDO::PARAM_STR);
-            $stms->bindParam(4, $dato['id'], PDO::PARAM_INT);
+            $stms->bindParam(4, $dato['email'], PDO::PARAM_STR);
+            $stms->bindParam(5, $dato['id'], PDO::PARAM_INT);
         }
         try {
             if ($stms->execute()) {
