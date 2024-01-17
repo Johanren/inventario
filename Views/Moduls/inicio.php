@@ -51,10 +51,11 @@ $diseno = $listarDiseno->listarDisenoTemplete();
                         <th>Peso</th>
                         <th>Cantidad</th>
                         <th>Total</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="factura">
-                    <tr>
+                    <tr class="eliminar_1">
                         <td><input type="hidden" name="id_articulo[]" id="id_articulo_1"><input type="text"
                                 name="codigo" class="form-control codigo_articulo" id="codigo_1"
                                 placeholder="Codigo producto"></td>
@@ -66,6 +67,7 @@ $diseno = $listarDiseno->listarDisenoTemplete();
                         </td>
                         <td><input type="text" name="total" class="form-control resultado" id="resultado_1" disabled>
                         </td>
+                        <td><a class="btn btn-primary mt-3 eliminar" id="eliminarFactura">Eliminar</a></td>
                     </tr>
                 </tbody>
                 <tbody>

@@ -549,7 +549,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 	var index = 2;
 	$("#agregarFactura").click(function () {
-		$("#factura").append('<tr><td><input type="hidden" name="id_articulo[]" id="id_articulo_' + index + '"><input type="text" name="codigo" class="form-control codigo_articulo" id="codigo_' + index + '" placeholder="Codigo producto"></td><td><input type="text" name="articulo" class="form-control nombre_articulo" id="nombre_' + index + '" placeholder="Nombre producto"></td><td><input type="text" name="precio" class="form-control" id="valor_' + index + '" disabled></td><td><input type="text" name="descuento[]" class="form-control" id="descuento_' + index + '" value="0"></td><td><input type="text" name="peso[]" class="form-control peso" id="peso_' + index + '" value="0" required><td><input type="text" name="cantidad[]" class="form-control cantidad" id="cantidad_' + index + '" value="0" required></td><td><input type="text" name="total" class="form-control resultado" id="resultado_' + index + '" disabled></td></tr>');
+		$("#factura").append('<tr class="eliminar_'+index+'"><td><input type="hidden" name="id_articulo[]" id="id_articulo_' + index + '"><input type="text" name="codigo" class="form-control codigo_articulo" id="codigo_' + index + '" placeholder="Codigo producto"></td><td><input type="text" name="articulo" class="form-control nombre_articulo" id="nombre_' + index + '" placeholder="Nombre producto"></td><td><input type="text" name="precio" class="form-control" id="valor_' + index + '" disabled></td><td><input type="text" name="descuento[]" class="form-control" id="descuento_' + index + '" value="0"></td><td><input type="text" name="peso[]" class="form-control peso" id="peso_' + index + '" value="0" required><td><input type="text" name="cantidad[]" class="form-control cantidad" id="cantidad_' + index + '" value="0" required></td><td><input type="text" name="total" class="form-control resultado" id="resultado_' + index + '" disabled></td><td><a class="btn btn-primary mt-3 eliminar" id="eliminarFactura">Eliminar</a></td></tr>');
 		index++;
 	});
 });
@@ -562,6 +562,14 @@ $(document).ready(function () {
 		index++;
 	});
 });
+
+//revome
+for (let index = 0; index < 30; index++) {
+	$(document).on('click', '.eliminar', function () {
+		$(this).parents('.eliminar_' + index + '').remove();
+	})
+}
+
 
 //obtener peso de una valanza
 window.addEventListener('deviceorientation', handleOrientation);
