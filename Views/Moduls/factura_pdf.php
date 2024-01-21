@@ -185,9 +185,9 @@ $headers = "MIME-VERSION: 1.0\r\n";
 $headers .= "Content-type: text/html; charset=utf-8\r\n";
 
 if (mail($to_email, $subject, $body, $headers)) {
-	echo "<script>alert('Factura envidad correctamente a $to_email');</script>";
+	echo "<script>alert('Factura enviada correctamente');</script>";
 } else {
-	echo "<script>alert('Factura fallida a $to_email');</script>";
+	echo "<script>alert('Factura fallida');</script>";
 }
 
 ?>
@@ -363,7 +363,7 @@ if (mail($to_email, $subject, $body, $headers)) {
 		conector.Feed(1);
 		const respuesta = await conector
 			.imprimirEn("prueba1");
-		init();* /
+		init();*/
 		// Las siguientes 3 funciones fueron tomadas de: https://parzibyte.me/blog/2023/02/28/javascript-tabular-datos-limite-longitud-separador-relleno/
 		// No tienen que ver con el plugin, solo son funciones de JS creadas por mí para tabular datos y enviarlos
 		// a cualquier lugar
@@ -412,9 +412,9 @@ if (mail($to_email, $subject, $body, $headers)) {
 		}
 
 
-		/*const obtenerListaDeImpresoras = async () => {
+		const obtenerListaDeImpresoras = async () => {
 			return await ConectorPluginV3.obtenerImpresoras();
-		}*/
+		}
 		const URLPlugin = "http://localhost:8000"
 		const $listaDeImpresoras = document.querySelector("#listaDeImpresoras"),
 			$btnImprimir = document.querySelector("#btnImprimir"),
@@ -451,7 +451,7 @@ if (mail($to_email, $subject, $body, $headers)) {
 				relleno = $relleno.value,
 				separadorColumnas = $separador.value;
 			const obtenerLineaSeparadora = () => {
-				const lineasSeparador = tabularDatos(
+				const lineasSeparador = tabularDatos( 
 					[
 						{ contenido: "-", maximaLongitud: maximaLongitudNombre },
 						{ contenido: "-", maximaLongitud: maximaLongitudCantidad },
@@ -471,13 +471,12 @@ if (mail($to_email, $subject, $body, $headers)) {
 			// definir otras propiedades, etcétera
 			const listaDeProductos = [
 				<?php foreach ($resVenta as $key => $value) {
-					?>
-											{
+					?>{
 						nombre: "<?php echo $value['nombre_producto'] ?>",
 						cantidad: <?php if ($value['cantidad'] > 0) {
 							echo $value['cantidad'];
 						} else {
-							echo $value['peso'];
+							echo $value['peso'] ;
 						} ?>,
 						precio: <?php echo $value['valor_unitario'] ?>,
 						precioTotal: <?php echo $value['precio_compra'] ?>,
@@ -491,6 +490,7 @@ if (mail($to_email, $subject, $body, $headers)) {
 
 
 			const lineasEncabezado = tabularDatos([
+
 				{ contenido: "Nombre", maximaLongitud: maximaLongitudNombre },
 				{ contenido: "Cantidad", maximaLongitud: maximaLongitudCantidad },
 				{ contenido: "Precio", maximaLongitud: maximaLongitudPrecio },

@@ -52,7 +52,6 @@ ob_start();
 		</div>
 	</section>
 	<script src="Views/js/ConectorJavaScript.js"></script>
-	<script src="Views/js/jquery-3.7.0.js"></script>
 	<script src="Views/js/jquery-3.6.0.js"></script>
 	<script type='text/javascript' src='Views/js/jquery/3.2.1/jquery.min.js'></script>
 	<script src="Views/js/jquery-ui.js"></script>
@@ -60,6 +59,7 @@ ob_start();
 	<script src="Views/js/popper.min.js"></script>
 	<script src="Views/js/bootstrap.min.js"></script>
 	<script src="views/js/js.js"></script>
+	<script src="Views/js/jquery-3.7.0.js"></script>
 </body>
 
 </html>
