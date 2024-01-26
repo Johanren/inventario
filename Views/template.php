@@ -59,7 +59,6 @@ ob_start();
 	<script src="Views/js/popper.min.js"></script>
 	<script src="Views/js/bootstrap.min.js"></script>
 	<script src="views/js/js.js"></script>
-	<script src="Views/js/jquery-3.7.0.js"></script>
 </body>
 
 </html>

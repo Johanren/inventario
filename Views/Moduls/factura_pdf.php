@@ -184,11 +184,11 @@ $body .=
 $headers = "MIME-VERSION: 1.0\r\n";
 $headers .= "Content-type: text/html; charset=utf-8\r\n";
 
-if (mail($to_email, $subject, $body, $headers)) {
+/*if (mail($to_email, $subject, $body, $headers)) {
 	echo "<script>alert('Factura enviada correctamente');</script>";
 } else {
 	echo "<script>alert('Factura fallida');</script>";
-}
+}*/
 
 ?>
 <div class="container">
