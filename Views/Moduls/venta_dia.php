@@ -336,7 +336,17 @@ $diseno = $listarDiseno->listarDisenoTemplete();
                 .TextoSegunPaginaDeCodigos(2, "cp850", "Nit: <?php echo $diseno[0]['nit'] ?>\n")
                 .TextoSegunPaginaDeCodigos(2, "cp850", "Teléfono: <?php echo $diseno[0]['telefono'] ?>\n")
                 .TextoSegunPaginaDeCodigos(2, "cp850", "Nit: <?php echo $diseno[0]['direccion'] ?>\n")
+                <?php
+                if (isset($_POST['buscar'])) {
+                ?>
+                .EscribirTexto("Fecha: <?php echo $_POST['buscar'] ?>")
+                <?php
+                }else{
+                ?>
                 .EscribirTexto("Fecha: " + (new Intl.DateTimeFormat("es-MX").format(new Date())))
+                <?php
+                }
+                ?>
                 .Feed(1)
                 .EstablecerAlineacion(ConectorPluginV3.ALINEACION_IZQUIERDA)
                 .EscribirTexto("____________________\n")
