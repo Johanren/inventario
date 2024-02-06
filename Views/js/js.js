@@ -2,7 +2,15 @@
 document.addEventListener('keydown', function (event) {
 	//agregar factura
 	if (event.key === 'F2') {
-		document.getElementById("agregarFactura").click();
+		var urlActual = window.location.href;
+		var hosting = window.location.hostname;
+		//console.log(hosting);
+		if (urlActual == "http://"+hosting+"/inventario/agregarArticulo") {
+			document.getElementById("agregarArticulo").click();
+		} else {
+			document.getElementById("agregarFactura").click();
+		}
+
 	}
 	//eliminar columna factura
 	if (event.key === 'F4') {
