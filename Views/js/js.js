@@ -503,7 +503,8 @@ $(document).ready(function () {
 		let gramo = document.getElementById('peso_' + index + '');
 		gramo.addEventListener("keyup", function () {
 			var precio_gramo = parseInt(valor) / 1000;
-			var total_gramo = parseInt(precio_gramo) * parseInt(this.value);
+			console.log(parseInt(precio_gramo));
+			var total_gramo = precio_gramo * parseInt(this.value);
 			document.getElementById('resultado_' + index).value = total_gramo;
 
 		});
@@ -663,6 +664,7 @@ $(document).ready(function () {
 			cantidad = 0;
 			posicion = [];
 			$('#codigo_' + index + '').val('');
+			document.getElementById('codigo_' + index).value = codigo;
 		}
 		$('#codigo_' + index + '').on("keyup", function (e) {
 			var codigo = $('#codigo_' + index + '').val();
