@@ -32,7 +32,9 @@ class modeloViews
             $enlace == 'mostrarFactura' ||
             $enlace == 'ingresar' ||
             $enlace == 'venta_dia' ||
-            $enlace == 'factura_pdf'
+            $enlace == 'factura_pdf' ||
+            $enlace == 'deudores' ||
+            $enlace == 'editarDeudorFactura'
         ) {
             $modulo = 'Views/Moduls/' . $enlace . '.php';
         } elseif ($enlace == 'proeevedorAgregado') {

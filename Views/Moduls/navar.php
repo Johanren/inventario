@@ -36,6 +36,16 @@ if (isset($_SESSION['rol'])) {
                             </svg><span class="ms-1 d-none d-sm-inline">Ventas del dia</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="deudores" class="nav-link text-truncate">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                class="bi bi-credit-card-2-back" viewBox="0 0 16 16">
+                                <path d="M11 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5z" />
+                                <path
+                                    d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm13 2v5H1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1m-1 9H2a1 1 0 0 1-1-1v-1h14v1a1 1 0 0 1-1 1" />
+                            </svg><span class="ms-1 d-none d-sm-inline">Deudores</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="index.php?action=articulo&pagina=1" class="nav-link text-truncate">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -166,6 +176,16 @@ if (isset($_SESSION['rol'])) {
                                     d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083q.088-.517.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1z" />
                                 <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 6 6 0 0 1 3.13-1.567" />
                             </svg><span class="ms-1 d-none d-sm-inline">Ventas del dia</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="deudores" class="nav-link text-truncate">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                class="bi bi-credit-card-2-back" viewBox="0 0 16 16">
+                                <path d="M11 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5z" />
+                                <path
+                                    d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm13 2v5H1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1m-1 9H2a1 1 0 0 1-1-1v-1h14v1a1 1 0 0 1-1 1" />
+                            </svg><span class="ms-1 d-none d-sm-inline">Deudores</span>
                         </a>
                     </li>
                     <li>
