@@ -588,7 +588,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 	var index = 2;
 	$("#agregarFactura").click(function () {
-		$("#factura").append('<tr class="eliminar_' + index + '"><td><input type="hidden" name="id_articulo[]" id="id_articulo_' + index + '"><input type="text" name="codigo" class="form-control codigo_articulo" id="codigo_' + index + '" placeholder="Codigo producto"></td><td><input type="text" name="articulo" class="form-control nombre_articulo" id="nombre_' + index + '" placeholder="Nombre producto"></td><td><input type="text" name="precio" class="form-control" id="valor_' + index + '" disabled></td><td><input type="text" name="descuento[]" class="form-control" id="descuento_' + index + '" value="0"></td><td><input type="text" name="peso[]" class="form-control peso" id="peso_' + index + '" value="0" required><td><input type="text" name="cantidad[]" class="form-control cantidad" id="cantidad_' + index + '" value="0" required></td><td><input type="text" name="total" class="form-control resultado" id="resultado_' + index + '" disabled></td><td><a class="btn btn-primary mt-3 eliminar" id="eliminarFactura">Eliminar</a></td></tr>');
+		$("#factura").append('<tr clcodigo_articuloass="eliminar_' + index + '"><td><input type="hidden" name="id_articulo[]" id="id_articulo_' + index + '"><input type="text" name="codigo" class="form-control codigo_articulo" id="codigo_' + index + '" placeholder="Codigo producto"></td><td><input type="text" name="articulo" class="form-control nombre_articulo" id="nombre_' + index + '" placeholder="Nombre producto"></td><td><input type="text" name="precio" class="form-control" id="valor_' + index + '" disabled></td><td><input type="text" name="descuento[]" class="form-control" id="descuento_' + index + '" value="0"></td><td><input type="text" name="peso[]" class="form-control peso" id="peso_' + index + '" value="0" required><td><input type="text" name="cantidad[]" class="form-control cantidad" id="cantidad_' + index + '" value="0" required></td><td><input type="text" name="total" class="form-control resultado" id="resultado_' + index + '" disabled></td><td><a class="btn btn-primary mt-3 eliminar" id="eliminarFactura">Eliminar</a></td></tr>');
 		index++;
 	});
 });
@@ -598,6 +598,15 @@ $(document).ready(function () {
 	var index = 2;
 	$("#agregarArticulo").click(function () {
 		$("#articulo").append('<tr><td><input type="hidden" name="id_articulo[]" id="id_articulo_' + index + '"><input type="text" name="codigo[]" class="form-control codigo" id="codigo_' + index + '" required></td><td><input type="text" name="nombre[]" class="form-control nombre" id="nombre_' + index + '" required></td><td><input type="hidden" name="id_categoria[]" class="id_categoria" id="id_categoria_' + index + '"><input type="text" name="categoria[]" class="form-control categoria" id="categoria_' + index + '"></td><td><input type="hidden" name="id_medida[]" class="id_medida" id="id_medida_' + index + '"><input type="text" name="medida[]" class="form-control medida" id="medida_' + index + '" required></td><td><input type="text" name="iva[]" class="form-control" id="iva_' + index + '" required></td><td><input type="text" name="valor[]" class="form-control"id="valor_' + index + '" required></td><td><input type="hidden" name="cantidad_articulo[]" class="form-control" id="cantidad_' + index + '"><input type="text" name="cantidad[]" class="form-control" required></td></tr>');
+		index++;
+	});
+});
+
+//agregar promocion
+$(document).ready(function () {
+	var index = 3;
+	$("#agregarPromocion").click(function () {
+		$("#promocion").append('<tr><td><input type="hidden" name="id_articulo[]" id="id_articulo_' + index + '"><input type="text" name="Codigopromocion[]" class="form-control codigo_articulo"id="codigo_' + index + '" placeholder="Codigo producto"></td><td><input type="text" name="articuloPromocion[]" placeholder="Articulo"class="form-control nombre_articulo" id="nombre_' + index + '"></td></tr>');
 		index++;
 	});
 });

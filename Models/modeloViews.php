@@ -34,7 +34,10 @@ class modeloViews
             $enlace == 'venta_dia' ||
             $enlace == 'factura_pdf' ||
             $enlace == 'deudores' ||
-            $enlace == 'editarDeudorFactura'
+            $enlace == 'editarDeudorFactura' ||
+            $enlace == 'promociones' ||
+            $enlace == 'agregarPromocion' ||
+            $enlace == 'editarPromocion'
         ) {
             $modulo = 'Views/Moduls/' . $enlace . '.php';
         } elseif ($enlace == 'proeevedorAgregado') {
@@ -69,6 +72,10 @@ class modeloViews
             $modulo = 'Views/Moduls/ingresar.php';
         }elseif ($enlace == 'loginInactivo') {
             $modulo = 'Views/Moduls/ingresar.php';
+        }elseif ($enlace == 'okPromocion') {
+            $modulo = 'Views/Moduls/promociones.php';
+        }elseif ($enlace == 'okPromocionActu') {
+            $modulo = 'Views/Moduls/promociones.php';
         }
         return $modulo;
 

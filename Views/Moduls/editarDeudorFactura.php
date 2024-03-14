@@ -4,7 +4,7 @@ $diseno = $listarDiseno->listarDisenoTemplete();
 //
 $agregarFactura = new ModeloFactura();
 $resUltimoId = $agregarFactura->mostrarUltimoId();
-$id_factura = $resUltimoId[0]['MAX(id_factura)'];
+$id_factura = $_GET['id_factura'];
 //
 $mostrarVenta = new ControladorVenta();
 $resVenta = $mostrarVenta->mostrarFacturaVenta($id_factura);
@@ -101,7 +101,7 @@ $fechaActal = date('Y-m-d');
                     <th></th>
                     <th></th>
                     <th>
-                        <?php echo $resFactura[0]['total_factura'] ?>
+                        <?php echo $resFactura[0]['total_factura']; ?>
                     </th>
                 </tr>
             </tbody>
@@ -109,7 +109,8 @@ $fechaActal = date('Y-m-d');
                 <tr>
                     <th>Pago</th>
                     <th>
-                        <?php echo $resFactura[0]['efectivo'] ?>
+                        <?php echo $resFactura[0]['efectivo'] ?><input type="hidden" id="" name="efectivo" class="form-control"
+                            value="<?php echo $resFactura[0]['efectivo'] ?>">
                     </th>
                     <th></th>
                     <th>Debe</th>

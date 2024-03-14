@@ -88,6 +88,26 @@ class ControladorFactura
                     $agregarVenta = new ControladorVenta();
                     $resVenta = $agregarVenta->agregarVenta($datoVenta);
                     if ($resVenta == true) {
+                        $buscarPromocion = new ControladorPromocion();
+                        $resPromo = $buscarPromocion->lstarArticuloPromocion($id_articulo[$i]);
+                        if ($resPromo != []) {
+                            foreach ($resPromo as $key => $value) {
+                                $buscar = new ControladorArticulo();
+                                $res = $buscar->mostrarArticulo($value['id_articulo']);
+                                $cantidad_articulo = $res[0]['cantidad_producto'];
+                                if ($peso[$i] > 0) {
+                                    $total_cantidad_articulo = $cantidad_articulo - $peso[$i];
+                                } else {
+                                    $total_cantidad_articulo = $cantidad_articulo - $cantidad[$i];
+                                }
+                                $dato_articulo = array(
+                                    'total_cantidad_articulo' => $total_cantidad_articulo,
+                                    'id_articulo' => $value['id_articulo']
+                                );
+                                $actualizar_articulo = new ControladorArticulo();
+                                $actualizar_articulo->actualizarArticuloCantida($dato_articulo);
+                            }
+                        }
                         $buscar = new ControladorArticulo();
                         $res = $buscar->mostrarArticulo($id_articulo[$i]);
                         $cantidad_articulo = $res[0]['cantidad_producto'];
@@ -102,7 +122,8 @@ class ControladorFactura
                         );
                         $actualizar_articulo = new ControladorArticulo();
                         $res_articulo = $actualizar_articulo->actualizarArticuloCantida($dato_articulo);
-                        if ($res_articulo = true) {
+
+                        if ($res_articulo == true) {
                             echo '<script>window.location="factura_pdf"</script>';
                         }
                     }
@@ -130,7 +151,9 @@ class ControladorFactura
         $fechaActal = date('Y-m-d');
         if (isset($_POST['guardar'])) {
             $total = $_POST['debe'] + $_POST['abono'];
+            $abono = $_POST['efectivo'] + $_POST['abono'];
             $dato = array(
+                'pago' => $abono,
                 'total' => $total,
                 'id_factura' => $_GET['id_factura'],
                 'id_usuario' => $_SESSION['id_usuario'],

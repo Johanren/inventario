@@ -98,15 +98,16 @@ class ModeloFactura
 
     function actualizarDeudaFacturaModelo($dato)
     {
-        $sql = "UPDATE $this->tabla SET cambio = ?, fecha_factura = ?, id_usuario = ? WHERE id_factura = ?";
+        $sql = "UPDATE $this->tabla SET efectivo = ?, cambio = ?, fecha_factura = ?, id_usuario = ? WHERE id_factura = ?";
         try {
             $conn = new Conexion();
             $stms = $conn->conectar()->prepare($sql);
             if ($dato != null) {
-                $stms->bindParam(1, $dato['total'], PDO::PARAM_INT);
-                $stms->bindParam(2, $dato['fecha'], PDO::PARAM_STR);
-                $stms->bindParam(3, $dato['id_usuario'], PDO::PARAM_INT);
-                $stms->bindParam(4, $dato['id_factura'], PDO::PARAM_INT);
+                $stms->bindParam(1, $dato['pago'], PDO::PARAM_INT);
+                $stms->bindParam(2, $dato['total'], PDO::PARAM_INT);
+                $stms->bindParam(3, $dato['fecha'], PDO::PARAM_STR);
+                $stms->bindParam(4, $dato['id_usuario'], PDO::PARAM_INT);
+                $stms->bindParam(5, $dato['id_factura'], PDO::PARAM_INT);
             }
             if ($stms->execute()) {
                 return true;

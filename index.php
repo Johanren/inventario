@@ -15,6 +15,7 @@ require_once 'controllers/controladorArticulo.php';
 require_once 'controllers/controladorFacturaProeevedor.php';
 require_once 'controllers/controladorFactura.php';
 require_once 'controllers/controladorVenta.php';
+require_once 'controllers/controladorPromocion.php';
 //Modelo
 require_once 'Models/conexion.php';
 require_once 'Models/modeloViews.php';
@@ -31,6 +32,7 @@ require_once 'Models/modeloArticulo.php';
 require_once 'Models/modeloFacturaProeevedor.php';
 require_once 'Models/modeloFactura.php';
 require_once 'Models/modeloVenta.php';
+require_once 'Models/modeloPromocion.php';
 //fpdf
 
 
