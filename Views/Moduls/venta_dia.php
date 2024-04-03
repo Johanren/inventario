@@ -5,6 +5,20 @@ $total = $cantidad->ventaTotalDia();
 ////
 $listarDiseno = new ControladorDiseno();
 $diseno = $listarDiseno->listarDisenoTemplete();
+///
+$listarFactura = new ControladorFactura();
+$reslistar = $listarFactura->listarFacturaCliente();
+if ($diseno != null) {
+    $nombreSistema = $diseno[0]['nom_sistema'];
+    $nit = $diseno[0]['nit'];
+    $tel = $diseno[0]['telefono'];
+    $dire = $diseno[0]['direccion'];
+} else {
+    $nombreSistema = "Inventario";
+    $nit = "1111";
+    $tel = "1111";
+    $dire = "NNNN";
+}
 ?>
 <h1 style="text-align: center;">Venta del dia</h1>
 <div class="container mt-5">
@@ -25,6 +39,18 @@ $diseno = $listarDiseno->listarDisenoTemplete();
                                 <path
                                     d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1" />
                             </svg></a>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                class="bi bi-receipt-cutoff" viewBox="0 0 16 16">
+                                <path
+                                    d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5M11.5 4a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z" />
+                                <path
+                                    d="M2.354.646a.5.5 0 0 0-.801.13l-.5 1A.5.5 0 0 0 1 2v13H.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H15V2a.5.5 0 0 0-.053-.224l-.5-1a.5.5 0 0 0-.8-.13L13 1.293l-.646-.647a.5.5 0 0 0-.708 0L11 1.293l-.646-.647a.5.5 0 0 0-.708 0L9 1.293 8.354.646a.5.5 0 0 0-.708 0L7 1.293 6.354.646a.5.5 0 0 0-.708 0L5 1.293 4.354.646a.5.5 0 0 0-.708 0L3 1.293zm-.217 1.198.51.51a.5.5 0 0 0 .707 0L4 1.707l.646.647a.5.5 0 0 0 .708 0L6 1.707l.646.647a.5.5 0 0 0 .708 0L8 1.707l.646.647a.5.5 0 0 0 .708 0L10 1.707l.646.647a.5.5 0 0 0 .708 0L12 1.707l.646.647a.5.5 0 0 0 .708 0l.509-.51.137.274V15H2V2.118z" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -86,6 +112,77 @@ $diseno = $listarDiseno->listarDisenoTemplete();
         </tr>
     </tbody>
 </table>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Facturas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" name="cc" placeholder="CC">
+                        </div>
+                        <div class="col">
+                            <input type="date" class="form-control" name="fecha">
+                        </div>
+                        <div class="col">
+                            <button type="hidden" name="buscar" class="btn btn-primary">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+                <table class="table mt-5">
+                    <thead>
+                        <tr>
+                            <th>Numero factura</th>
+                            <th>Cedula cliente</th>
+                            <th>Nombre cliente</th>
+                            <th>Fecha factura</th>
+                            <th>Imprimir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($reslistar as $key => $value) {
+                            ?>
+                            <tr>
+                                <td>
+                                    <?php echo $value['id_factura'] ?>
+                                </td>
+                                <td>
+                                    <?php echo $value['numero_cedula'] ?>
+                                </td>
+                                <td>
+                                    <?php echo $value['nombre'] . $value['apellido'] ?>
+                                </td>
+                                <td>
+                                    <?php echo $value['fecha_factura'] ?>
+                                </td>
+                                <td><a
+                                        href="index.php?action=factura_pdf&id_factura=<?php echo $value['id_factura'] ?>"><button class="btn btn-primary"><svg
+                                                xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                fill="currentColor" class="bi bi-receipt-cutoff" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5M11.5 4a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z" />
+                                                <path
+                                                    d="M2.354.646a.5.5 0 0 0-.801.13l-.5 1A.5.5 0 0 0 1 2v13H.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H15V2a.5.5 0 0 0-.053-.224l-.5-1a.5.5 0 0 0-.8-.13L13 1.293l-.646-.647a.5.5 0 0 0-.708 0L11 1.293l-.646-.647a.5.5 0 0 0-.708 0L9 1.293 8.354.646a.5.5 0 0 0-.708 0L7 1.293 6.354.646a.5.5 0 0 0-.708 0L5 1.293 4.354.646a.5.5 0 0 0-.708 0L3 1.293zm-.217 1.198.51.51a.5.5 0 0 0 .707 0L4 1.707l.646.647a.5.5 0 0 0 .708 0L6 1.707l.646.647a.5.5 0 0 0 .708 0L8 1.707l.646.647a.5.5 0 0 0 .708 0L10 1.707l.646.647a.5.5 0 0 0 .708 0L12 1.707l.646.647a.5.5 0 0 0 .708 0l.509-.51.137.274V15H2V2.118z" />
+                                            </svg></button></a></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="columns">
         <div class="column">
@@ -133,33 +230,10 @@ $diseno = $listarDiseno->listarDisenoTemplete();
 </div>
 </div>
 <script>
-    
+
     //Imprimir
 
     document.addEventListener("DOMContentLoaded", async () => {
-        /*const conector = new ConectorPluginV3();
-        conector.Iniciar();
-        conector.EscribirTexto("<?php echo $diseno[0]['nom_sistema'] ?>\n");
-        conector.EscribirTexto("<?php echo $diseno[0]['nit'] ?>\n");
-        conector.EscribirTexto("<?php echo $diseno[0]['telefono'] ?>\n");
-        conector.EscribirTexto("<?php echo $diseno[0]['direccion'] ?>\n");
-        conector.EscribirTexto("--------------------------------------------------\n");
-        conector.EscribirTexto("Producto  |  Cantidad  |  Precio  | Total\n");
-        <?php
-        foreach ($resVenta as $key => $value) {
-            ?>
-            conector.EscribirTexto("<?php echo $value['nombre_producto'] ?>                                                                <?php echo $value['cantidad'] ?>                                                                <?php echo $value['valor_producto_iva'] ?>                                                               <?php echo $value['precio_compra'] ?>\n");
-            <?php
-        }
-        ?>
-        conector.EscribirTexto("--------------------------------------------------\n");
-        conector.EscribirTexto("Total $<?php echo $resFactura[0]['total_factura'] ?>\n");
-        conector.EscribirTexto("--------------------------------------------------\n");
-        conector.EscribirTexto("Pago <?php echo $resFactura[0]['efectivo'] ?>   Cambio: <?php echo $resFactura[0]['cambio'] ?>\n");
-        conector.Feed(1);
-        const respuesta = await conector
-            .imprimirEn("prueba1");
-        init();*/
         // Las siguientes 3 funciones fueron tomadas de: https://parzibyte.me/blog/2023/02/28/javascript-tabular-datos-limite-longitud-separador-relleno/
         // No tienen que ver con el plugin, solo son funciones de JS creadas por mí para tabular datos y enviarlos
         // a cualquier lugar
@@ -330,23 +404,27 @@ $diseno = $listarDiseno->listarDisenoTemplete();
                 .Iniciar()
                 .DeshabilitarElModoDeCaracteresChinos()
                 .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
-                .DescargarImagenDeInternetEImprimir("http://<?php echo $_SERVER['HTTP_HOST'] ?>/inventario/<?php echo $diseno[0]['icon_sistema'] ?>", 0, 216)
+                .DescargarImagenDeInternetEImprimir("http://<?php echo $_SERVER['HTTP_HOST'] ?>/inventario/<?php if ($diseno != null) {
+                       echo $diseno[0]['icon_sistema'];
+                   } else {
+                       echo "Views/img/img.jpg";
+                   } ?>", 0, 216)
                 .Feed(1)
-                .EscribirTexto("<?php echo $diseno[0]['nom_sistema'] ?>\n")
-                .TextoSegunPaginaDeCodigos(2, "cp850", "Nit: <?php echo $diseno[0]['nit'] ?>\n")
-                .TextoSegunPaginaDeCodigos(2, "cp850", "Teléfono: <?php echo $diseno[0]['telefono'] ?>\n")
-                .TextoSegunPaginaDeCodigos(2, "cp850", "Nit: <?php echo $diseno[0]['direccion'] ?>\n")
-                <?php
-                if (isset($_POST['buscar'])) {
+                .EscribirTexto("<?php echo $nombreSistema ?>\n")
+                .TextoSegunPaginaDeCodigos(2, "cp850", "Nit: <?php echo $nit ?>\n")
+                .TextoSegunPaginaDeCodigos(2, "cp850", "Teléfono: <?php echo $tel ?>\n")
+                .TextoSegunPaginaDeCodigos(2, "cp850", "Direccion: <?php echo $dire ?>\n")
+            <?php
+            if (isset($_POST['buscar'])) {
                 ?>
-                .EscribirTexto("Fecha: <?php echo $_POST['buscar'] ?>")
+                    .EscribirTexto("Fecha: <?php echo $_POST['buscar'] ?>")
                 <?php
-                }else{
+            } else {
                 ?>
-                .EscribirTexto("Fecha: " + (new Intl.DateTimeFormat("es-MX").format(new Date())))
+                    .EscribirTexto("Fecha: " + (new Intl.DateTimeFormat("es-MX").format(new Date())))
                 <?php
-                }
-                ?>
+            }
+            ?>
                 .Feed(1)
                 .EstablecerAlineacion(ConectorPluginV3.ALINEACION_IZQUIERDA)
                 .EscribirTexto("____________________\n")

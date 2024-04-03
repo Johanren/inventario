@@ -4,7 +4,11 @@ $diseno = $listarDiseno->listarDisenoTemplete();
 //
 $agregarFactura = new ModeloFactura();
 $resUltimoId = $agregarFactura->mostrarUltimoId();
-$id_factura = $resUltimoId[0]['MAX(id_factura)'];
+if(isset($_GET['id_factura'])){
+	$id_factura = $_GET['id_factura'];
+}else{
+	$id_factura = $resUltimoId[0]['MAX(id_factura)'];
+}
 //
 $mostrarVenta = new ControladorVenta();
 $resVenta = $mostrarVenta->mostrarFacturaVenta($id_factura);
@@ -18,9 +22,19 @@ $resCliente = $mostrarCliente->mostrarClienteFacturaVentaModelo($id_cliente);
 
 date_default_timezone_set('America/Mexico_City');
 $fechaActal = date('Y-m-d');
-
-$to_email = "".$resCliente[0]['correo']."";
-$subject = "Factura electronica N° " . $resFactura[0]['id_factura'] . " de " . $diseno[0]['nom_sistema'] . "";
+if ($diseno != null) {
+	$nombreSistema = $diseno[0]['nom_sistema'];
+	$nit = $diseno[0]['nit'];
+	$tel = $diseno[0]['telefono'];
+	$dire = $diseno[0]['direccion'];
+} else {
+	$nombreSistema = "Inventario";
+	$nit = "1111";
+	$tel = "1111";
+	$dire = "NNNN";
+}
+$to_email = "" . $resCliente[0]['correo'] . "";
+$subject = "Factura electronica N° " . $resFactura[0]['id_factura'] . " de " . $nombreSistema . "";
 $body = "
 <html>
 <head>
@@ -37,16 +51,16 @@ $body = "
 				$fechaActal
 			</div>
 		<div class='mt-3' style='text-align: center;'>
-				" . $diseno[0]['nom_sistema'] . "
+				" . $nombreSistema . "
 			<br>
 			Nit: 
-				" . $diseno[0]['nit'] . "
+				" . $nit . "
 			<br>
 			Telefono: 
-				" . $diseno[0]['telefono'] . "
+				" . $tel . "
 			<br>
 			Dirección: 
-				" . $diseno[0]['direccion'] . "
+				" . $dire . "
 		</div>
 	</div>
 </div>
@@ -206,20 +220,33 @@ $headers .= "Content-type: text/html; charset=utf-8\r\n";
 				?>
 			</div>
 			<div class="mt-3" style="text-align: center;">
-				<span id="nom_proeevedor">
-					<?php echo $diseno[0]['nom_sistema'] ?>
-				</span>
-				<br>
+				Sistema: <span id="nom_proeevedor">
+					<?php if ($diseno != null) {
+						echo $diseno[0]['nom_sistema'];
+					} else {
+						echo "Inventario";
+					} ?>
+				</span><br>
 				Nit: <span id="nit_proeevedor">
-					<?php echo $diseno[0]['nit'] ?>
-				</span>
-				<br>
+					<?php if ($diseno != null) {
+						echo $diseno[0]['nit'];
+					} else {
+						echo "1111";
+					} ?>
+				</span><br>
 				Telefono: <span id="tel_proeevedor">
-					<?php echo $diseno[0]['telefono'] ?>
-				</span>
-				<br>
+					<?php if ($diseno != null) {
+						echo $diseno[0]['telefono'];
+					} else {
+						echo "11111";
+					} ?>
+				</span><br>
 				Dirección: <span id="dir_proeevedor">
-					<?php echo $diseno[0]['direccion'] ?>
+					<?php if ($diseno != null) {
+						echo $diseno[0]['direccion'];
+					} else {
+						echo "NNNNN";
+					} ?>
 				</span>
 			</div>
 		</div>
@@ -352,7 +379,7 @@ $headers .= "Content-type: text/html; charset=utf-8\r\n";
 		<?php
 		foreach ($resVenta as $key => $value) {
 			?>
-			conector.EscribirTexto("<?php echo $value['nombre_producto'] ?>							<?php echo $value['cantidad'] ?>							<?php echo $value['valor_producto_iva'] ?>					   	<?php echo $value['precio_compra'] ?>\n");
+			conector.EscribirTexto("<?php echo $value['nombre_producto'] ?>									<?php echo $value['cantidad'] ?>									<?php echo $value['valor_producto_iva'] ?>							   	<?php echo $value['precio_compra'] ?>\n");
 			<?php
 		}
 		?>
@@ -425,6 +452,7 @@ $headers .= "Content-type: text/html; charset=utf-8\r\n";
 			$maximaLongitudPrecio = document.querySelector("#maximaLongitudPrecio");
 		$maximaLongitudPrecioTotal = document.querySelector("#maximaLongitudPrecio");
 
+	
 		const init = async () => {
 			/*const impresoras = await ConectorPluginV3.obtenerImpresoras();
 			for (const impresora of impresoras) {
@@ -451,7 +479,7 @@ $headers .= "Content-type: text/html; charset=utf-8\r\n";
 				relleno = $relleno.value,
 				separadorColumnas = $separador.value;
 			const obtenerLineaSeparadora = () => {
-				const lineasSeparador = tabularDatos( 
+				const lineasSeparador = tabularDatos(
 					[
 						{ contenido: "-", maximaLongitud: maximaLongitudNombre },
 						{ contenido: "-", maximaLongitud: maximaLongitudCantidad },
@@ -476,7 +504,7 @@ $headers .= "Content-type: text/html; charset=utf-8\r\n";
 						cantidad: <?php if ($value['cantidad'] > 0) {
 							echo $value['cantidad'];
 						} else {
-							echo $value['peso'] ;
+							echo $value['peso'];
 						} ?>,
 						precio: <?php echo $value['valor_unitario'] ?>,
 						precioTotal: <?php echo $value['precio_compra'] ?>,
@@ -529,17 +557,16 @@ $headers .= "Content-type: text/html; charset=utf-8\r\n";
 				.Iniciar()
 				.DeshabilitarElModoDeCaracteresChinos()
 				.EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
-				.DescargarImagenDeInternetEImprimir("http://<?php echo $_SERVER['HTTP_HOST'] ?>/inventario/<?php echo $diseno[0]['icon_sistema'] ?>", 0, 216)
+				.DescargarImagenDeInternetEImprimir("http://<?php echo $_SERVER['HTTP_HOST'] ?>/inventario/<?php if($diseno != null){echo $diseno[0]['icon_sistema'];}else{echo "Views/img/img.jpg";} ?>", 0, 216)
 				.Feed(1)
-				.EscribirTexto("<?php echo $diseno[0]['nom_sistema'] ?>\n")
-				.TextoSegunPaginaDeCodigos(2, "cp850", "Nit: <?php echo $diseno[0]['nit'] ?>\n")
-				.TextoSegunPaginaDeCodigos(2, "cp850", "Teléfono: <?php echo $diseno[0]['telefono'] ?>\n")
-				.TextoSegunPaginaDeCodigos(2, "cp850", "Nit: <?php echo $diseno[0]['direccion'] ?>\n")
+				.EscribirTexto("<?php echo $nombreSistema ?>\n")
+				.TextoSegunPaginaDeCodigos(2, "cp850", "Nit: <?php echo $nit ?>\n")
+				.TextoSegunPaginaDeCodigos(2, "cp850", "Teléfono: <?php echo $tel ?>\n")
+				.TextoSegunPaginaDeCodigos(2, "cp850", "Direccion: <?php echo $dire ?>\n")
 				.EscribirTexto("Fecha: " + (new Intl.DateTimeFormat("es-MX").format(new Date())))
 				.Feed(1)
 				.EstablecerAlineacion(ConectorPluginV3.ALINEACION_IZQUIERDA)
 				.EscribirTexto("____________________\n")
-				.TextoSegunPaginaDeCodigos(2, "cp850", "Venta de plugin para impresoras versión 3\n")
 				.EstablecerAlineacion(ConectorPluginV3.ALINEACION_DERECHA)
 				.EscribirTexto(tabla)
 				.EscribirTexto("------------------------------------------------\n")

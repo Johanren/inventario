@@ -118,4 +118,34 @@ class ModeloFactura
             print_r($e->getMessage());
         }
     }
+
+    function listarFacturaClienteModelo($dato){
+        date_default_timezone_set('America/Mexico_City');
+        $fechaActal = date('Y-m-d');
+        if ($dato != null) {
+            $sql = "SELECT * FROM $this->tabla INNER JOIN cliente ON cliente.id_cliente = factura.id_cliente WHERE cliente.numero_cedula = ? AND fecha_factura like ?";
+        } else {
+            $sql = "SELECT * FROM $this->tabla INNER JOIN cliente ON cliente.id_cliente = factura.id_cliente WHERE fecha_factura like ?";
+        }
+
+        try {
+            $conn = new Conexion();
+            $stms = $conn->conectar()->prepare($sql);
+            if ($dato != null) {
+                $fecha = $dato['fecha']."%";
+                $stms->bindParam(1, $dato['cc'], PDO::PARAM_STR);
+                $stms->bindParam(2, $fecha, PDO::PARAM_STR);
+            } else {
+                $fechaActal = $fechaActal."%";
+                $stms->bindParam(1, $fechaActal, PDO::PARAM_STR);
+            }
+            if ($stms->execute()) {
+                return $stms->fetchAll();
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            print_r($e->getMessage());
+        }
+    }
 }

@@ -36,20 +36,33 @@ $fechaActal = date('Y-m-d');
                         ?>
                 </div>
                 <div class="mt-3" style="text-align: center;">
-                    <span id="nom_proeevedor">
-                        <?php echo $diseno[0]['nom_sistema'] ?>
-                    </span>
-                    <br>
+                    Sistema: <span id="nom_proeevedor">
+                        <?php if ($diseno != null) {
+                            echo $diseno[0]['nom_sistema'];
+                        } else {
+                            echo "Inventario";
+                        } ?>
+                    </span><br>
                     Nit: <span id="nit_proeevedor">
-                        <?php echo $diseno[0]['nit'] ?>
-                    </span>
-                    <br>
+                        <?php if ($diseno != null) {
+                            echo $diseno[0]['nit'];
+                        } else {
+                            echo "1111";
+                        } ?>
+                    </span><br>
                     Telefono: <span id="tel_proeevedor">
-                        <?php echo $diseno[0]['telefono'] ?>
-                    </span>
-                    <br>
+                        <?php if ($diseno != null) {
+                            echo $diseno[0]['telefono'];
+                        } else {
+                            echo "11111";
+                        } ?>
+                    </span><br>
                     Dirección: <span id="dir_proeevedor">
-                        <?php echo $diseno[0]['direccion'] ?>
+                        <?php if ($diseno != null) {
+                            echo $diseno[0]['direccion'];
+                        } else {
+                            echo "NNNNN";
+                        } ?>
                     </span>
                 </div>
             </div>
@@ -109,8 +122,8 @@ $fechaActal = date('Y-m-d');
                 <tr>
                     <th>Pago</th>
                     <th>
-                        <?php echo $resFactura[0]['efectivo'] ?><input type="hidden" id="" name="efectivo" class="form-control"
-                            value="<?php echo $resFactura[0]['efectivo'] ?>">
+                        <?php echo $resFactura[0]['efectivo'] ?><input type="hidden" id="" name="efectivo"
+                            class="form-control" value="<?php echo $resFactura[0]['efectivo'] ?>">
                     </th>
                     <th></th>
                     <th>Debe</th>

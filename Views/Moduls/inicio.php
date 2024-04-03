@@ -26,22 +26,23 @@ $diseno = $listarDiseno->listarDisenoTemplete();
                     </div>
                     <div class="mt-3" style="text-align: center;">
                         Sistema: <span id="nom_proeevedor">
-                            <?php echo $diseno[0]['nom_sistema'] ?>
+                            <?php if($diseno != null){echo $diseno[0]['nom_sistema'];}else{echo "Inventario";} ?>
                         </span><br>
                         Nit: <span id="nit_proeevedor">
-                            <?php echo $diseno[0]['nit'] ?>
+                            <?php if($diseno != null){echo $diseno[0]['nit'];}else{echo "1111";} ?>
                         </span><br>
                         Telefono: <span id="tel_proeevedor">
-                            <?php echo $diseno[0]['telefono'] ?>
+                            <?php if($diseno != null){echo $diseno[0]['telefono'];}else{echo "11111";} ?>
                         </span><br>
                         Dirección: <span id="dir_proeevedor">
-                            <?php echo $diseno[0]['direccion'] ?>
+                            <?php if($diseno != null){echo $diseno[0]['direccion'];}else{echo "NNNNN";} ?>
                         </span>
                     </div>
                 </div>
             </div>
             <a class="btn btn-primary mt-3" id="agregarFactura">Agregar</a>
-            <table class="table mt-5">
+            <div class="table-responsive">
+            <table class="table mt-5 table-hover">
                 <thead>
                     <tr>
                         <th>Codigo</th>
@@ -94,6 +95,7 @@ $diseno = $listarDiseno->listarDisenoTemplete();
                     </tr>
                 </tbody>
             </table>
+            </div>
             <div style="text-align: right;">
                 <button name="imprimir" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="30"
                         height="30" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">

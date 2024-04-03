@@ -11,21 +11,22 @@ ob_start();
 	?>
 	<meta charset="utf-8">
 	<link rel="icon"
-		href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/inventario/<?php echo $diseno[0]['icon_sistema'] ?>">
+		href="http://<?php echo $_SERVER['HTTP_HOST'] ?>/inventario/<?php if($diseno != null){echo $diseno[0]['icon_sistema'];}else{echo "Views/img/img.jpg";} ?>">
 	<link href="Views/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="Views/css/jquery-ui.css">
+	<link rel="stylesheet" href="Views/css/login.css">
+	<script src="Views/js/jquery-3.3.1.slim.min.js"></script>
 	<title>
-		<?php echo $diseno[0]['nom_sistema'] ?>
+		<?php if($diseno != null){echo $diseno[0]['nom_sistema'];}else{echo "Inventario";} ?>
 	</title>
 
 </head>
-<body id="body-pd">
+<body id="body-pd" class="d-flex align-items-center py-4 bg-body-tertiary">
 	<header>
 		<?php
 		include('Views/Moduls/navar.php');
 		?>
 	</header>
-	<section>
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col min-vh-100 p-4">
@@ -50,7 +51,6 @@ ob_start();
 				</div>
 			</div>
 		</div>
-	</section>
 	<script src="Views/js/ConectorJavaScript.js"></script>
 	<script src="Views/js/jquery-3.6.0.js"></script>
 	<script type='text/javascript' src='Views/js/jquery/3.2.1/jquery.min.js'></script>

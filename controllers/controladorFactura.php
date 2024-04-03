@@ -166,4 +166,35 @@ class ControladorFactura
             }
         }
     }
+
+    function listarFacturaCliente()
+    {
+        if (isset($_POST['buscar'])) {
+            date_default_timezone_set('America/Mexico_City');
+            $fechaActal = date('Y-m-d');
+            if ($_POST['cc'] && $_POST['fecha'] != null) {
+                $dato = array(
+                    'cc' => $_POST['cc'],
+                    'fecha' => $_POST['fecha']
+                );
+            } elseif($_POST['cc'] != null) {
+                $dato = array(
+                    'cc' => $_POST['cc'],
+                    'fecha' => $fechaActal
+                );
+            }
+            $consultar = new ModeloFactura();
+            $res  = $consultar->listarFacturaClienteModelo($dato);
+            if ($res) {
+                print "<script>$(document).ready(function() {
+                    $('#exampleModal').modal('toggle')
+                });</script>";
+            }
+            return $res;
+        }else{
+            $consultar = new ModeloFactura();
+            $res  = $consultar->listarFacturaClienteModelo('');
+            return $res;
+        }
+    }
 }
